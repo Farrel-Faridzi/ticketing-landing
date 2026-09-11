@@ -1,4 +1,6 @@
+import { useRef } from 'react';
 import { cn } from '@/lib/utils';
+import { ArrowLeftIcon, ArrowRightIcon } from './icons';
 import { PillBadge, type PillBadgeProps } from './pill-badge';
 import { PillButton } from './pill-button';
 
@@ -11,7 +13,7 @@ interface Concert {
     priceFrom: string;
     imageSeed: string;
     service: 'reservation' | 'membership' | 'stock';
-    featured?: boolean;
+    recommended?: boolean;
 }
 
 const serviceMeta: Record<
@@ -48,7 +50,7 @@ const concerts: Concert[] = [
         priceFrom: 'Rp 275rb',
         imageSeed: 'ilalang-indie-folk-stage-jakarta',
         service: 'reservation',
-        featured: true,
+        recommended: true,
     },
     {
         id: 'velvet-static-bandung',
@@ -90,47 +92,57 @@ const concerts: Concert[] = [
         imageSeed: 'serigala-senja-rock-yogyakarta',
         service: 'membership',
     },
+    {
+        id: 'nadya-alif-bali',
+        name: 'Nadya Alif',
+        genre: 'R&B / Soul',
+        venue: 'Bali Convention Grounds',
+        date: '23 Nov 2026',
+        priceFrom: 'Rp 260rb',
+        imageSeed: 'nadya-alif-rnb-bali',
+        service: 'reservation',
+    },
+    {
+        id: 'awan-tropis-jakarta',
+        name: 'Awan Tropis',
+        genre: 'Synth Pop',
+        venue: 'Kasablanka Live House, Jakarta',
+        date: '30 Nov 2026',
+        priceFrom: 'Rp 230rb',
+        imageSeed: 'awan-tropis-synth-pop-jakarta',
+        service: 'stock',
+    },
 ];
-
-function ConcertImage({
-    seed,
-    tint,
-    className,
-}: {
-    seed: string;
-    tint: string;
-    className?: string;
-}) {
-    return (
-        <div className={cn('relative overflow-hidden', className)}>
-            <img
-                src={`https://picsum.photos/seed/${seed}/900/700`}
-                alt=""
-                width={900}
-                height={700}
-                loading="lazy"
-                className="h-full w-full object-cover"
-            />
-            <div className={cn('absolute inset-0 mix-blend-multiply', tint)} />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/35 via-transparent to-transparent" />
-        </div>
-    );
-}
 
 function ConcertCard({ concert }: { concert: Concert }) {
     const meta = serviceMeta[concert.service];
 
     return (
-        <div className="border-mkt-border bg-mkt-card flex flex-col overflow-hidden rounded-[18px] border">
-            <ConcertImage
-                seed={concert.imageSeed}
-                tint={meta.tint}
-                className="aspect-[4/3]"
-            />
+        <div className="border-mkt-border bg-mkt-card flex w-[270px] shrink-0 snap-start flex-col overflow-hidden rounded-[18px] border sm:w-[300px]">
+            <div className="relative aspect-[4/3] overflow-hidden">
+                <img
+                    src={`https://picsum.photos/seed/${concert.imageSeed}/700/560`}
+                    alt=""
+                    width={700}
+                    height={560}
+                    loading="lazy"
+                    className="h-full w-full object-cover"
+                />
+                <div
+                    className={cn(
+                        'absolute inset-0 mix-blend-multiply',
+                        meta.tint,
+                    )}
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/35 via-transparent to-transparent" />
+            </div>
             <div className="flex flex-1 flex-col gap-3 p-6">
-                <PillBadge tone={meta.tone} className="self-start">
-                    {meta.label}
-                </PillBadge>
+                <div className="flex flex-wrap items-center gap-2">
+                    <PillBadge tone={meta.tone}>{meta.label}</PillBadge>
+                    {concert.recommended && (
+                        <PillBadge tone="accent">Rekomendasi</PillBadge>
+                    )}
+                </div>
                 <div>
                     <h3 className="text-[17px] font-bold">{concert.name}</h3>
                     <p className="text-text-faint text-[13px]">
@@ -158,66 +170,54 @@ function ConcertCard({ concert }: { concert: Concert }) {
 }
 
 export function AvailableConcerts() {
-    const [featured, ...rest] = concerts;
-    const featuredMeta = serviceMeta[featured.service];
+    const scrollRef = useRef<HTMLDivElement>(null);
+
+    function scrollByCard(direction: -1 | 1) {
+        scrollRef.current?.scrollBy({
+            left: direction * 316,
+            behavior: 'smooth',
+        });
+    }
 
     return (
         <div id="events" className="px-6 py-16 md:px-16 md:py-20">
-            <div className="mx-auto mb-10 max-w-[600px] text-center">
-                <h2 className="text-[32px] font-extrabold">
-                    Event yang lagi dibuka
-                </h2>
-                <p className="text-text-muted mt-3 text-[15px] leading-[1.6]">
-                    Cek jadwal konser minggu ini, lalu klik buat lihat harga dan
-                    cara pesannya.
-                </p>
+            <div className="mx-auto flex max-w-[1100px] items-end justify-between gap-6">
+                <div>
+                    <h2 className="text-[28px] font-extrabold md:text-[32px]">
+                        Event yang lagi dibuka
+                    </h2>
+                    <p className="text-text-muted mt-2 max-w-[440px] text-[15px] leading-[1.6]">
+                        Geser buat lihat konser lainnya, klik kartunya buat cek
+                        harga dan cara pesannya.
+                    </p>
+                </div>
+                <div className="hidden shrink-0 items-center gap-2.5 md:flex">
+                    <button
+                        type="button"
+                        aria-label="Konser sebelumnya"
+                        onClick={() => scrollByCard(-1)}
+                        className="border-mkt-border bg-mkt-card hover:border-mkt-accent flex h-11 w-11 items-center justify-center rounded-full border transition-colors"
+                    >
+                        <ArrowLeftIcon size={18} />
+                    </button>
+                    <button
+                        type="button"
+                        aria-label="Konser berikutnya"
+                        onClick={() => scrollByCard(1)}
+                        className="border-mkt-border bg-mkt-card hover:border-mkt-accent flex h-11 w-11 items-center justify-center rounded-full border transition-colors"
+                    >
+                        <ArrowRightIcon size={18} />
+                    </button>
+                </div>
             </div>
 
-            <div className="mx-auto max-w-[1100px]">
-                <div className="border-mkt-border bg-mkt-card grid grid-cols-1 overflow-hidden rounded-[20px] border md:grid-cols-2">
-                    <ConcertImage
-                        seed={featured.imageSeed}
-                        tint={featuredMeta.tint}
-                        className="aspect-[4/3] md:aspect-auto"
-                    />
-                    <div className="flex flex-col justify-center gap-4 p-8">
-                        <PillBadge
-                            tone={featuredMeta.tone}
-                            className="self-start"
-                        >
-                            {featuredMeta.label}
-                        </PillBadge>
-                        <div>
-                            <h3 className="text-[24px] font-extrabold">
-                                {featured.name}
-                            </h3>
-                            <p className="text-text-faint text-[14px]">
-                                {featured.genre}
-                            </p>
-                        </div>
-                        <div className="text-text-muted flex flex-col gap-1 text-[14.5px]">
-                            <span>{featured.venue}</span>
-                            <span>{featured.date}</span>
-                        </div>
-                        <div className="flex items-center justify-between pt-2">
-                            <div>
-                                <div className="text-text-faint text-[12px]">
-                                    Mulai dari
-                                </div>
-                                <div className="text-[18px] font-bold">
-                                    {featured.priceFrom}
-                                </div>
-                            </div>
-                            <PillButton>{featuredMeta.cta}</PillButton>
-                        </div>
-                    </div>
-                </div>
-
-                <div className="mt-6 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
-                    {rest.map((concert) => (
-                        <ConcertCard key={concert.id} concert={concert} />
-                    ))}
-                </div>
+            <div
+                ref={scrollRef}
+                className="mx-auto mt-8 flex max-w-[1100px] snap-x snap-mandatory scrollbar-none gap-6 overflow-x-auto pb-2"
+            >
+                {concerts.map((concert) => (
+                    <ConcertCard key={concert.id} concert={concert} />
+                ))}
             </div>
         </div>
     );

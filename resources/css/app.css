@@ -69,10 +69,10 @@
     --color-text-muted: oklch(48% 0.012 264);
     --color-text-faint: oklch(62% 0.01 264);
 
-    --color-mkt-accent: oklch(58% 0.19 292);
-    --color-mkt-accent-dark: oklch(48% 0.19 292);
-    --color-mkt-accent-soft: oklch(58% 0.19 292 / 10%);
-    --color-mkt-accent-soft-2: oklch(58% 0.19 292 / 18%);
+    --color-mkt-accent: oklch(56% 0.22 345);
+    --color-mkt-accent-dark: oklch(45% 0.21 345);
+    --color-mkt-accent-soft: oklch(56% 0.22 345 / 10%);
+    --color-mkt-accent-soft-2: oklch(56% 0.22 345 / 18%);
 
     --color-warn: oklch(64% 0.16 40);
     --color-warn-soft: oklch(64% 0.16 40 / 12%);
@@ -80,6 +80,14 @@
     --color-good-soft: oklch(62% 0.15 150 / 14%);
     --color-info: oklch(62% 0.13 220);
     --color-info-soft: oklch(62% 0.13 220 / 14%);
+}
+
+.scrollbar-none {
+    scrollbar-width: none;
+}
+
+.scrollbar-none::-webkit-scrollbar {
+    display: none;
 }
 
 :root {

@@ -139,6 +139,24 @@ export function ChatIcon(props: IconProps) {
     );
 }
 
+export function ArrowLeftIcon(props: IconProps) {
+    return (
+        <svg {...strokeProps(props)} strokeWidth={2}>
+            <path d="M19 12H5" />
+            <path d="m11 18-6-6 6-6" />
+        </svg>
+    );
+}
+
+export function ArrowRightIcon(props: IconProps) {
+    return (
+        <svg {...strokeProps(props)} strokeWidth={2}>
+            <path d="M5 12h14" />
+            <path d="m13 6 6 6-6 6" />
+        </svg>
+    );
+}
+
 export function ChevronIcon({
     open,
     ...props
