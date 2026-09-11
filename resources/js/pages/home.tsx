@@ -10,20 +10,20 @@ import { OrderTrackingPreview } from '@/components/marketing/order-tracking-prev
 import { ProblemSolution } from '@/components/marketing/problem-solution';
 
 export default function Home() {
-  return (
-    <>
-      <Head title="Reservation, Rent Membership & Ready Stock" />
-      <div className="min-h-screen bg-bg font-sans text-text">
-        <Nav />
-        <Hero />
-        <OrderTrackingPreview />
-        <CoreServices />
-        <ProblemSolution />
-        <FeaturesGrid />
-        <FaqAccordion />
-        <CtaBand />
-        <Footer />
-      </div>
-    </>
-  );
+    return (
+        <>
+            <Head title="Reservation, Rent Membership & Ready Stock" />
+            <div className="bg-bg text-text min-h-screen font-sans">
+                <Nav />
+                <Hero />
+                <OrderTrackingPreview />
+                <CoreServices />
+                <ProblemSolution />
+                <FeaturesGrid />
+                <FaqAccordion />
+                <CtaBand />
+                <Footer />
+            </div>
+        </>
+    );
 }
