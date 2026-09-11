@@ -3,7 +3,7 @@ import { describe, expect, it, vi } from 'vitest';
 
 vi.mock('@inertiajs/react', () => ({ Head: () => null }));
 
-import Home from '../home';
+import Home from '../../pages/home';
 
 describe('Home page', () => {
     it('renders every landing-page section in order', () => {
