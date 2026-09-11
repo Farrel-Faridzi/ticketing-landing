@@ -62,7 +62,7 @@ export function CoreServices() {
                 eyebrow="Core Services"
                 title="3 cara dapetin tiket impianmu"
             />
-            <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
+            <div className="mx-auto grid max-w-[1100px] grid-cols-1 gap-6 md:grid-cols-3">
                 {services.map((service) => (
                     <ServiceCard key={service.id} {...service} />
                 ))}
