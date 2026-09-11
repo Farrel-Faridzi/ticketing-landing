@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+
 @import 'tailwindcss';
 
 @import 'tw-animate-css';
@@ -8,10 +10,7 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme {
-    --font-sans:
-        'Instrument Sans', ui-sans-serif, system-ui, sans-serif,
-        'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',
-        'Noto Color Emoji';
+    --font-sans: 'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif;
 
     --radius-lg: var(--radius);
     --radius-md: calc(var(--radius) - 2px);
@@ -59,6 +58,28 @@
     --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
     --color-sidebar-border: var(--sidebar-border);
     --color-sidebar-ring: var(--sidebar-ring);
+
+    --color-bg: oklch(99% 0.002 264);
+    --color-bg-alt: oklch(96.5% 0.004 264);
+    --color-card: oklch(100% 0 0);
+    --color-border: oklch(90% 0.006 264);
+    --color-border-soft: oklch(93% 0.004 264);
+
+    --color-text: oklch(22% 0.012 264);
+    --color-text-muted: oklch(48% 0.012 264);
+    --color-text-faint: oklch(62% 0.01 264);
+
+    --color-accent: oklch(58% 0.19 292);
+    --color-accent-dark: oklch(48% 0.19 292);
+    --color-accent-soft: oklch(58% 0.19 292 / 10%);
+    --color-accent-soft-2: oklch(58% 0.19 292 / 18%);
+
+    --color-warn: oklch(64% 0.16 40);
+    --color-warn-soft: oklch(64% 0.16 40 / 12%);
+    --color-good: oklch(62% 0.15 150);
+    --color-good-soft: oklch(62% 0.15 150 / 14%);
+    --color-info: oklch(62% 0.13 220);
+    --color-info-soft: oklch(62% 0.13 220 / 14%);
 }
 
 :root {
@@ -140,4 +161,9 @@
     body {
         @apply bg-background text-foreground;
     }
+}
+
+body {
+    background: var(--color-bg);
+    color: var(--color-text);
 }

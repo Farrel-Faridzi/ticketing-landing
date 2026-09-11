@@ -74,4 +74,9 @@ export default defineConfig({
             entryPoint: 'resources/css/app.css',
         },
     },
+    test: {
+        environment: 'jsdom',
+        globals: true,
+        setupFiles: ['./resources/js/test/setup.ts'],
+    },
 });
