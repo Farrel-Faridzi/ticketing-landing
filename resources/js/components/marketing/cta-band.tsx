@@ -12,10 +12,12 @@ export function CtaBand() {
                     Cek daftar event yang sedang dibuka, atau tanya langsung
                     kalau masih ada yang mau dipastikan.
                 </p>
-                <PillButton>
-                    <TicketIcon size={17} />
-                    Lihat Semua Event
-                </PillButton>
+                <a href="#events">
+                    <PillButton>
+                        <TicketIcon size={17} />
+                        Lihat Semua Event
+                    </PillButton>
+                </a>
             </div>
         </div>
     );

@@ -39,10 +39,12 @@ export function Hero() {
             </p>
 
             <div className="mb-7 flex flex-wrap justify-center gap-3.5">
-                <PillButton>
-                    <SearchIcon size={17} />
-                    Lihat Event Sekarang
-                </PillButton>
+                <a href="#events">
+                    <PillButton>
+                        <SearchIcon size={17} />
+                        Lihat Event Sekarang
+                    </PillButton>
+                </a>
                 <PillButton variant="outline">
                     <CalendarCheckIcon size={17} />
                     Cek Status Order

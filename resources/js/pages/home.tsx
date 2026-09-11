@@ -1,4 +1,5 @@
 import { Head } from '@inertiajs/react';
+import { AvailableConcerts } from '@/components/marketing/available-concerts';
 import { CoreServices } from '@/components/marketing/core-services';
 import { CtaBand } from '@/components/marketing/cta-band';
 import { FaqAccordion } from '@/components/marketing/faq-accordion';
@@ -18,6 +19,7 @@ export default function Home() {
                 <Hero />
                 <OrderTrackingPreview />
                 <CoreServices />
+                <AvailableConcerts />
                 <ProblemSolution />
                 <FeaturesGrid />
                 <FaqAccordion />
