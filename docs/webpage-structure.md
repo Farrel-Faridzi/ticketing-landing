@@ -6,7 +6,7 @@ Dokumen ini menggambarkan kondisi **aktual** halaman `/` sekarang (bukan spec aw
 
 - Laravel 13 + Inertia.js + React 19 + TypeScript
 - Tailwind CSS v4 (token warna via `@theme` di `resources/css/app.css`)
-- Vitest + React Testing Library (29 test, semua di `resources/js/components/marketing/__tests__/` dan `resources/js/__tests__/pages/`)
+- Vitest + React Testing Library (33 test, semua di `resources/js/components/marketing/__tests__/` dan `resources/js/__tests__/pages/`)
 - Pest/PHPUnit untuk backend (`tests/Feature/HomePageTest.php`)
 
 ## Route
@@ -21,7 +21,7 @@ Satu route publik: `GET /` → `resources/js/pages/home.tsx` (nama komponen Iner
 | 2 | Hero | `components/marketing/hero.tsx` | Headline + subheadline, 2 CTA ("Lihat Event Sekarang" → scroll ke `#events`, "Cek Status Order"), trust row, 3 pill tab layanan (dekoratif) |
 | 3 | Order Tracking Preview | `components/marketing/order-tracking-preview.tsx` | Contoh kartu status order (Payment/Customer Data/Order Status) |
 | 4 | Core Services | `components/marketing/core-services.tsx` + `service-card.tsx` | 3 kartu: Reservation/Jastip, Rent Membership, Ready Stock — tombol WhatsApp di Ready Stock sudah link beneran ke `wa.me` |
-| 5 | **Available Concerts** | `components/marketing/available-concerts.tsx` | Carousel horizontal (scroll-snap + tombol panah), 7 konser fiktif (nama band/venue rekaan, lihat catatan di bawah), tiap kartu bertanda tone layanan (Reservation/Membership/Ready Stock) dan untuk yang Ready Stock, tombol WhatsApp berisi pesan pre-filled sesuai nama konsernya |
+| 5 | **Available Concerts** | `components/marketing/available-concerts.tsx` | Carousel horizontal (scroll-snap + tombol panah). Kartu bergaya poster konser (terinspirasi dari section "Don't miss these concerts" di tiket.com) — lebar 3:2, nama artis jadi tipografi besar di atas gradient tone layanan, info bar di bawah (venue/tanggal/harga + CTA). 7 konser fiktif (lihat catatan di bawah); untuk yang Ready Stock, tombol WhatsApp berisi pesan pre-filled sesuai nama konsernya |
 | 6 | Problem/Solution | `components/marketing/problem-solution.tsx` | 2 kolom: "Yang sering terjadi" vs "Yang kami perbaiki" |
 | 7 | Features Grid | `components/marketing/features-grid.tsx` | 5 fitur akun (harga jelas, pantau status, dst) |
 | 8 | FAQ | `components/marketing/faq-accordion.tsx` | Accordion 3 pertanyaan, single-open |
