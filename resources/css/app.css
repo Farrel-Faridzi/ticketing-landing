@@ -159,6 +159,28 @@
     --sidebar-accent-foreground: oklch(0.985 0 0);
     --sidebar-border: oklch(0.269 0 0);
     --sidebar-ring: oklch(0.439 0 0);
+
+    --color-bg: oklch(14% 0.01 264);
+    --color-bg-alt: oklch(18% 0.012 264);
+    --color-mkt-card: oklch(20% 0.012 264);
+    --color-mkt-border: oklch(30% 0.012 264);
+    --color-mkt-border-soft: oklch(25% 0.01 264);
+
+    --color-text: oklch(96% 0.004 264);
+    --color-text-muted: oklch(72% 0.01 264);
+    --color-text-faint: oklch(58% 0.01 264);
+
+    --color-mkt-accent: oklch(68% 0.2 345);
+    --color-mkt-accent-dark: oklch(80% 0.16 345);
+    --color-mkt-accent-soft: oklch(68% 0.2 345 / 16%);
+    --color-mkt-accent-soft-2: oklch(68% 0.2 345 / 26%);
+
+    --color-warn: oklch(72% 0.15 40);
+    --color-warn-soft: oklch(72% 0.15 40 / 18%);
+    --color-good: oklch(70% 0.14 150);
+    --color-good-soft: oklch(70% 0.14 150 / 20%);
+    --color-info: oklch(72% 0.13 220);
+    --color-info-soft: oklch(72% 0.13 220 / 20%);
 }
 
 @layer base {

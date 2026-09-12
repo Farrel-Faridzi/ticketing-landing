@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { BrandLogo } from './brand-logo';
 import { PillButton } from './pill-button';
+import { ThemeToggle } from './theme-toggle';
 
 const links = [
     { href: '#reservation', label: 'Reservation' },
@@ -30,6 +31,7 @@ export function Nav() {
                 </div>
 
                 <div className="hidden items-center gap-4 md:flex">
+                    <ThemeToggle />
                     <a
                         href="#"
                         className="text-text text-[14.5px] font-semibold"
@@ -39,17 +41,20 @@ export function Nav() {
                     <PillButton size="sm">Daftar</PillButton>
                 </div>
 
-                <button
-                    type="button"
-                    aria-label={open ? 'Tutup menu' : 'Buka menu'}
-                    className="border-mkt-border flex h-9 w-9 items-center justify-center rounded-full border md:hidden"
-                    onClick={() => setOpen((value) => !value)}
-                >
-                    <div className="flex flex-col gap-1" aria-hidden>
-                        <span className="bg-text h-[2px] w-4" />
-                        <span className="bg-text h-[2px] w-4" />
-                    </div>
-                </button>
+                <div className="flex items-center gap-2.5 md:hidden">
+                    <ThemeToggle />
+                    <button
+                        type="button"
+                        aria-label={open ? 'Tutup menu' : 'Buka menu'}
+                        className="border-mkt-border flex h-9 w-9 items-center justify-center rounded-full border"
+                        onClick={() => setOpen((value) => !value)}
+                    >
+                        <div className="flex flex-col gap-1" aria-hidden>
+                            <span className="bg-text h-[2px] w-4" />
+                            <span className="bg-text h-[2px] w-4" />
+                        </div>
+                    </button>
+                </div>
             </div>
 
             {open && (
