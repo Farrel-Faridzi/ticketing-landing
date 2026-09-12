@@ -6,7 +6,7 @@ Dokumen ini menggambarkan kondisi **aktual** halaman `/` sekarang (bukan spec aw
 
 - Laravel 13 + Inertia.js + React 19 + TypeScript
 - Tailwind CSS v4 (token warna via `@theme` di `resources/css/app.css`)
-- Vitest + React Testing Library (28 test, semua di `resources/js/components/marketing/__tests__/` dan `resources/js/__tests__/pages/`)
+- Vitest + React Testing Library (29 test, semua di `resources/js/components/marketing/__tests__/` dan `resources/js/__tests__/pages/`)
 - Pest/PHPUnit untuk backend (`tests/Feature/HomePageTest.php`)
 
 ## Route
@@ -17,7 +17,7 @@ Satu route publik: `GET /` → `resources/js/pages/home.tsx` (nama komponen Iner
 
 | # | Section | File komponen | Isi |
 |---|---|---|---|
-| 1 | Nav | `components/marketing/nav.tsx` | Logo "Konserin", link ke 4 section (anchor), tombol Masuk/Daftar (belum ada tujuan nyata — auth di luar scope), hamburger menu di mobile |
+| 1 | Nav | `components/marketing/nav.tsx` | Logo "Konserin", link ke 4 section (anchor), toggle dark/light mode, tombol Masuk/Daftar (belum ada tujuan nyata — auth di luar scope), hamburger menu di mobile |
 | 2 | Hero | `components/marketing/hero.tsx` | Headline + subheadline, 2 CTA ("Lihat Event Sekarang" → scroll ke `#events`, "Cek Status Order"), trust row, 3 pill tab layanan (dekoratif) |
 | 3 | Order Tracking Preview | `components/marketing/order-tracking-preview.tsx` | Contoh kartu status order (Payment/Customer Data/Order Status) |
 | 4 | Core Services | `components/marketing/core-services.tsx` + `service-card.tsx` | 3 kartu: Reservation/Jastip, Rent Membership, Ready Stock — tombol WhatsApp di Ready Stock sudah link beneran ke `wa.me` |
@@ -62,6 +62,10 @@ Warna aksen sudah diganti dari ungu (spec awal) ke pink/magenta vivid — satu p
 ```
 
 Token `mkt-*` sengaja dipisah dari token shadcn bawaan starter kit (`--color-border`, `--color-card`, `--color-accent` tanpa prefix) supaya nggak numpuk/nabrak sama styling komponen `resources/js/components/ui/*` (dashboard, login, dll — area yang belum digarap).
+
+## Dark Mode
+
+Toggle-nya ada di `components/marketing/theme-toggle.tsx` (ikon sun/moon hand-rolled, dipasang di Nav — desktop & mobile), pakai hook bawaan starter kit `resources/js/hooks/use-appearance.tsx` (`useAppearance()`) yang sudah handle persist ke `localStorage` + cookie dan dukungan `system` preference. Semua token `mkt-*` di atas punya override di blok `.dark { ... }` (`resources/css/app.css`) dengan nilai yang disesuaikan (background off-black bukan `#000` murni, aksen pink dinaikkan lightness-nya biar tetap kebaca di background gelap) — satu perubahan token nyebar otomatis ke semua section, sama seperti waktu ganti palet ungu → pink.
 
 ## Data Konser (Available Concerts)
 
