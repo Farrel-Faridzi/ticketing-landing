@@ -13,6 +13,7 @@ export interface ServiceCardProps {
     steps: string[];
     outlineLabel: string;
     solidLabel: string;
+    solidHref?: string;
 }
 
 const toneClasses = {
@@ -31,6 +32,7 @@ export function ServiceCard({
     steps,
     outlineLabel,
     solidLabel,
+    solidHref,
 }: ServiceCardProps) {
     const toneClass = toneClasses[tone];
 
@@ -74,9 +76,22 @@ export function ServiceCard({
                 >
                     {outlineLabel}
                 </PillButton>
-                <PillButton size="sm" className="flex-1 justify-center">
-                    {solidLabel}
-                </PillButton>
+                {solidHref ? (
+                    <a
+                        href={solidHref}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="flex-1"
+                    >
+                        <PillButton size="sm" className="w-full justify-center">
+                            {solidLabel}
+                        </PillButton>
+                    </a>
+                ) : (
+                    <PillButton size="sm" className="flex-1 justify-center">
+                        {solidLabel}
+                    </PillButton>
+                )}
             </div>
         </div>
     );

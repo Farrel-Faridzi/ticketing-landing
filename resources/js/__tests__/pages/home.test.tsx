@@ -42,6 +42,6 @@ describe('Home page', () => {
                 name: 'Siap nonton konser favoritmu?',
             }),
         ).toBeInTheDocument();
-        expect(screen.getByText('[NOMOR WHATSAPP]')).toBeInTheDocument();
+        expect(screen.getByText('+62 812-3456-7890')).toBeInTheDocument();
     });
 });

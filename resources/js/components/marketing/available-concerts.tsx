@@ -1,6 +1,15 @@
 import { useRef } from 'react';
 import { cn } from '@/lib/utils';
-import { ArrowLeftIcon, ArrowRightIcon } from './icons';
+import { buildWhatsAppLink } from '@/lib/whatsapp';
+import type { ComponentType } from 'react';
+import {
+    ArrowLeftIcon,
+    ArrowRightIcon,
+    KeyIcon,
+    PackageIcon,
+    TicketIcon,
+    type IconProps,
+} from './icons';
 import { PillBadge, type PillBadgeProps } from './pill-badge';
 import { PillButton } from './pill-button';
 
@@ -11,31 +20,39 @@ interface Concert {
     venue: string;
     date: string;
     priceFrom: string;
-    imageSeed: string;
     service: 'reservation' | 'membership' | 'stock';
     recommended?: boolean;
 }
 
 const serviceMeta: Record<
     Concert['service'],
-    { label: string; tone: PillBadgeProps['tone']; tint: string; cta: string }
+    {
+        label: string;
+        tone: PillBadgeProps['tone'];
+        icon: ComponentType<IconProps>;
+        gradient: string;
+        cta: string;
+    }
 > = {
     reservation: {
         label: 'Reservation / Jastip',
         tone: 'accent',
-        tint: 'bg-mkt-accent/30',
+        icon: TicketIcon,
+        gradient: 'from-mkt-accent to-black/75',
         cta: 'Mulai',
     },
     membership: {
         label: 'Rent Membership',
         tone: 'info',
-        tint: 'bg-info/25',
+        icon: KeyIcon,
+        gradient: 'from-info to-black/75',
         cta: 'Mulai',
     },
     stock: {
         label: 'Ready Stock',
         tone: 'warn',
-        tint: 'bg-warn/25',
+        icon: PackageIcon,
+        gradient: 'from-warn to-black/75',
         cta: 'WhatsApp',
     },
 };
@@ -48,7 +65,6 @@ const concerts: Concert[] = [
         venue: 'Distrik Hall, Jakarta',
         date: '18 Okt 2026',
         priceFrom: 'Rp 275rb',
-        imageSeed: 'ilalang-indie-folk-stage-jakarta',
         service: 'reservation',
         recommended: true,
     },
@@ -59,7 +75,6 @@ const concerts: Concert[] = [
         venue: 'Amphitheater Riverside, Bandung',
         date: '25 Okt 2026',
         priceFrom: 'Rp 320rb',
-        imageSeed: 'velvet-static-rock-bandung',
         service: 'membership',
     },
     {
@@ -69,7 +84,6 @@ const concerts: Concert[] = [
         venue: 'Grha Sabha, Surabaya',
         date: '2 Nov 2026',
         priceFrom: 'Rp 190rb',
-        imageSeed: 'kirana-ray-pop-surabaya',
         service: 'reservation',
     },
     {
@@ -79,7 +93,6 @@ const concerts: Concert[] = [
         venue: 'Skyline Arena, Jakarta',
         date: '9 Nov 2026',
         priceFrom: 'Rp 350rb',
-        imageSeed: 'monsoon-radio-electronic-jakarta',
         service: 'stock',
     },
     {
@@ -89,7 +102,6 @@ const concerts: Concert[] = [
         venue: 'Taman Budaya, Yogyakarta',
         date: '16 Nov 2026',
         priceFrom: 'Rp 210rb',
-        imageSeed: 'serigala-senja-rock-yogyakarta',
         service: 'membership',
     },
     {
@@ -99,7 +111,6 @@ const concerts: Concert[] = [
         venue: 'Bali Convention Grounds',
         date: '23 Nov 2026',
         priceFrom: 'Rp 260rb',
-        imageSeed: 'nadya-alif-rnb-bali',
         service: 'reservation',
     },
     {
@@ -109,33 +120,38 @@ const concerts: Concert[] = [
         venue: 'Kasablanka Live House, Jakarta',
         date: '30 Nov 2026',
         priceFrom: 'Rp 230rb',
-        imageSeed: 'awan-tropis-synth-pop-jakarta',
         service: 'stock',
     },
 ];
 
+function ConcertPoster({ service }: { service: Concert['service'] }) {
+    const meta = serviceMeta[service];
+    const Icon = meta.icon;
+
+    return (
+        <div
+            className={cn(
+                'flex aspect-[4/3] items-center justify-center bg-gradient-to-br',
+                meta.gradient,
+            )}
+        >
+            <Icon size={64} className="text-white/25" />
+        </div>
+    );
+}
+
 function ConcertCard({ concert }: { concert: Concert }) {
     const meta = serviceMeta[concert.service];
+    const ctaHref =
+        concert.service === 'stock'
+            ? buildWhatsAppLink(
+                  `Halo, saya mau tanya soal tiket ${concert.name} (${concert.date}).`,
+              )
+            : undefined;
 
     return (
         <div className="border-mkt-border bg-mkt-card flex w-[270px] shrink-0 snap-start flex-col overflow-hidden rounded-[18px] border sm:w-[300px]">
-            <div className="relative aspect-[4/3] overflow-hidden">
-                <img
-                    src={`https://picsum.photos/seed/${concert.imageSeed}/700/560`}
-                    alt=""
-                    width={700}
-                    height={560}
-                    loading="lazy"
-                    className="h-full w-full object-cover"
-                />
-                <div
-                    className={cn(
-                        'absolute inset-0 mix-blend-multiply',
-                        meta.tint,
-                    )}
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/35 via-transparent to-transparent" />
-            </div>
+            <ConcertPoster service={concert.service} />
             <div className="flex flex-1 flex-col gap-3 p-6">
                 <div className="flex flex-wrap items-center gap-2">
                     <PillBadge tone={meta.tone}>{meta.label}</PillBadge>
@@ -162,7 +178,13 @@ function ConcertCard({ concert }: { concert: Concert }) {
                             {concert.priceFrom}
                         </div>
                     </div>
-                    <PillButton size="sm">{meta.cta}</PillButton>
+                    {ctaHref ? (
+                        <a href={ctaHref} target="_blank" rel="noreferrer">
+                            <PillButton size="sm">{meta.cta}</PillButton>
+                        </a>
+                    ) : (
+                        <PillButton size="sm">{meta.cta}</PillButton>
+                    )}
                 </div>
             </div>
         </div>

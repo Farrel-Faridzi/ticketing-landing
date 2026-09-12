@@ -1,3 +1,4 @@
+import { buildWhatsAppLink, WHATSAPP_DISPLAY } from '@/lib/whatsapp';
 import { BrandLogo } from './brand-logo';
 
 const links = [
@@ -21,12 +22,19 @@ export function Footer() {
                         {link.label}
                     </a>
                 ))}
-                <a href="#" className="text-text-faint text-[13.5px]">
-                    [NOMOR WHATSAPP]
+                <a
+                    href={buildWhatsAppLink(
+                        'Halo, saya mau tanya soal tiket konser.',
+                    )}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="text-text-faint text-[13.5px]"
+                >
+                    {WHATSAPP_DISPLAY}
                 </a>
             </div>
             <div className="text-text-faint text-[12.5px]">
-                &copy; {new Date().getFullYear()} [NAMA BRAND]. Semua hak
+                &copy; {new Date().getFullYear()} Konserin. Semua hak
                 dilindungi.
             </div>
         </div>

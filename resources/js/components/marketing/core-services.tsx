@@ -1,3 +1,4 @@
+import { buildWhatsAppLink } from '@/lib/whatsapp';
 import { KeyIcon, PackageIcon, TicketIcon } from './icons';
 import { SectionHeading } from './section-heading';
 import { ServiceCard, type ServiceCardProps } from './service-card';
@@ -52,6 +53,9 @@ const services: ServiceCardProps[] = [
         ],
         outlineLabel: 'Lihat Stock',
         solidLabel: 'WhatsApp',
+        solidHref: buildWhatsAppLink(
+            'Halo, saya mau tanya soal Ready Stock tiket konser.',
+        ),
     },
 ];
 
