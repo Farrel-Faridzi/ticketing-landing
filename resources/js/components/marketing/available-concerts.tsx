@@ -1,16 +1,7 @@
 import { useRef } from 'react';
 import { cn } from '@/lib/utils';
 import { buildWhatsAppLink } from '@/lib/whatsapp';
-import type { ComponentType } from 'react';
-import {
-    ArrowLeftIcon,
-    ArrowRightIcon,
-    KeyIcon,
-    PackageIcon,
-    TicketIcon,
-    type IconProps,
-} from './icons';
-import { PillBadge, type PillBadgeProps } from './pill-badge';
+import { ArrowLeftIcon, ArrowRightIcon } from './icons';
 import { PillButton } from './pill-button';
 
 interface Concert {
@@ -26,33 +17,21 @@ interface Concert {
 
 const serviceMeta: Record<
     Concert['service'],
-    {
-        label: string;
-        tone: PillBadgeProps['tone'];
-        icon: ComponentType<IconProps>;
-        gradient: string;
-        cta: string;
-    }
+    { label: string; gradient: string; cta: string }
 > = {
     reservation: {
         label: 'Reservation / Jastip',
-        tone: 'accent',
-        icon: TicketIcon,
-        gradient: 'from-mkt-accent to-black/75',
+        gradient: 'from-mkt-accent to-black/90',
         cta: 'Mulai',
     },
     membership: {
         label: 'Rent Membership',
-        tone: 'info',
-        icon: KeyIcon,
-        gradient: 'from-info to-black/75',
+        gradient: 'from-info to-black/90',
         cta: 'Mulai',
     },
     stock: {
         label: 'Ready Stock',
-        tone: 'warn',
-        icon: PackageIcon,
-        gradient: 'from-warn to-black/75',
+        gradient: 'from-warn to-black/90',
         cta: 'WhatsApp',
     },
 };
@@ -124,23 +103,7 @@ const concerts: Concert[] = [
     },
 ];
 
-function ConcertPoster({ service }: { service: Concert['service'] }) {
-    const meta = serviceMeta[service];
-    const Icon = meta.icon;
-
-    return (
-        <div
-            className={cn(
-                'flex aspect-[4/3] items-center justify-center bg-gradient-to-br',
-                meta.gradient,
-            )}
-        >
-            <Icon size={64} className="text-white/25" />
-        </div>
-    );
-}
-
-function ConcertCard({ concert }: { concert: Concert }) {
+function ConcertPosterCard({ concert }: { concert: Concert }) {
     const meta = serviceMeta[concert.service];
     const ctaHref =
         concert.service === 'stock'
@@ -150,42 +113,46 @@ function ConcertCard({ concert }: { concert: Concert }) {
             : undefined;
 
     return (
-        <div className="border-mkt-border bg-mkt-card flex w-[270px] shrink-0 snap-start flex-col overflow-hidden rounded-[18px] border sm:w-[300px]">
-            <ConcertPoster service={concert.service} />
-            <div className="flex flex-1 flex-col gap-3 p-6">
+        <div className="w-[300px] shrink-0 snap-start overflow-hidden rounded-[16px] sm:w-[340px]">
+            <div
+                className={cn(
+                    'relative flex aspect-[3/2] flex-col justify-between bg-gradient-to-br p-5',
+                    meta.gradient,
+                )}
+            >
                 <div className="flex flex-wrap items-center gap-2">
-                    <PillBadge tone={meta.tone}>{meta.label}</PillBadge>
+                    <span className="rounded-full bg-black/30 px-3 py-1 text-[11px] font-bold text-white">
+                        {meta.label}
+                    </span>
                     {concert.recommended && (
-                        <PillBadge tone="accent">Rekomendasi</PillBadge>
+                        <span className="rounded-full bg-black/30 px-3 py-1 text-[11px] font-bold text-white">
+                            Rekomendasi
+                        </span>
                     )}
                 </div>
                 <div>
-                    <h3 className="text-[17px] font-bold">{concert.name}</h3>
-                    <p className="text-text-faint text-[13px]">
+                    <div className="text-[11px] font-semibold tracking-wide text-white/70 uppercase">
                         {concert.genre}
-                    </p>
-                </div>
-                <div className="text-text-muted flex flex-col gap-1 text-[13.5px]">
-                    <span>{concert.venue}</span>
-                    <span>{concert.date}</span>
-                </div>
-                <div className="mt-auto flex items-center justify-between pt-2">
-                    <div>
-                        <div className="text-text-faint text-[11.5px]">
-                            Mulai dari
-                        </div>
-                        <div className="text-[15px] font-bold">
-                            {concert.priceFrom}
-                        </div>
                     </div>
-                    {ctaHref ? (
-                        <a href={ctaHref} target="_blank" rel="noreferrer">
-                            <PillButton size="sm">{meta.cta}</PillButton>
-                        </a>
-                    ) : (
-                        <PillButton size="sm">{meta.cta}</PillButton>
-                    )}
+                    <h3 className="text-[28px] leading-[1.05] font-extrabold text-white">
+                        {concert.name}
+                    </h3>
                 </div>
+            </div>
+            <div className="border-mkt-border bg-mkt-card flex items-center justify-between gap-3 border border-t-0 px-5 py-4">
+                <div className="text-text-muted text-[12.5px]">
+                    <div>{concert.venue}</div>
+                    <div className="text-text-faint">
+                        {concert.date} &middot; mulai {concert.priceFrom}
+                    </div>
+                </div>
+                {ctaHref ? (
+                    <a href={ctaHref} target="_blank" rel="noreferrer">
+                        <PillButton size="sm">{meta.cta}</PillButton>
+                    </a>
+                ) : (
+                    <PillButton size="sm">{meta.cta}</PillButton>
+                )}
             </div>
         </div>
     );
@@ -196,23 +163,18 @@ export function AvailableConcerts() {
 
     function scrollByCard(direction: -1 | 1) {
         scrollRef.current?.scrollBy({
-            left: direction * 316,
+            left: direction * 356,
             behavior: 'smooth',
         });
     }
 
     return (
         <div id="events" className="px-6 py-16 md:px-16 md:py-20">
-            <div className="mx-auto flex max-w-[1100px] items-end justify-between gap-6">
-                <div>
-                    <h2 className="text-[28px] font-extrabold md:text-[32px]">
-                        Event yang lagi dibuka
-                    </h2>
-                    <p className="text-text-muted mt-2 max-w-[440px] text-[15px] leading-[1.6]">
-                        Geser buat lihat konser lainnya, klik kartunya buat cek
-                        harga dan cara pesannya.
-                    </p>
-                </div>
+            <div className="mx-auto flex max-w-[1100px] items-center justify-between gap-6">
+                <h2 className="text-[28px] font-extrabold md:text-[32px]">
+                    Jangan sampai kelewatan{' '}
+                    <span aria-hidden="true">&#127908;</span>
+                </h2>
                 <div className="hidden shrink-0 items-center gap-2.5 md:flex">
                     <button
                         type="button"
@@ -238,7 +200,7 @@ export function AvailableConcerts() {
                 className="mx-auto mt-8 flex max-w-[1100px] snap-x snap-mandatory scrollbar-none gap-6 overflow-x-auto pb-2"
             >
                 {concerts.map((concert) => (
-                    <ConcertCard key={concert.id} concert={concert} />
+                    <ConcertPosterCard key={concert.id} concert={concert} />
                 ))}
             </div>
         </div>
