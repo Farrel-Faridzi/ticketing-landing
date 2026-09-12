@@ -71,7 +71,7 @@ Toggle-nya ada di `components/marketing/theme-toggle.tsx` (ikon sun/moon hand-ro
 
 7 konser di `available-concerts.tsx` semuanya **data fiktif untuk demo** (nama band, venue, tanggal, harga — semuanya rekaan), karena `landing-page-handoff.md` eksplisit minta jangan tampilkan data event asli sebelum ada data beneran dari client. Kalau nanti sudah ada data event asli, tinggal ganti array `concerts` di file itu.
 
-Visual kartu konser pakai gradient poster + ikon (bukan foto), supaya nggak salah tampil foto yang nggak nyambung — bisa diganti foto asli nanti kalau sudah ada.
+Visual kartu pakai gradient poster + tipografi nama artis (bukan foto), supaya nggak salah tampil foto yang nggak nyambung — bisa diganti foto/poster asli nanti kalau sudah ada.
 
 ## Yang Masih Belum Real / Di Luar Scope
 
@@ -82,6 +82,6 @@ Visual kartu konser pakai gradient poster + ikon (bukan foto), supaya nggak sala
 
 ## Testing
 
-- `npm run test` — 28 test Vitest (satu file test per komponen di `__tests__/`, plus `resources/js/__tests__/pages/home.test.tsx` untuk integrasi seluruh halaman)
+- `npm run test` — 33 test Vitest (satu file test per komponen di `__tests__/`, plus `resources/js/__tests__/pages/home.test.tsx` untuk integrasi seluruh halaman)
 - `php artisan test` — 40 test PHPUnit (termasuk `HomePageTest.php` yang cek route `/` render komponen `home`)
 - `npm run check` — format + lint (Tailwind class sorting otomatis via `sortTailwindcss`)
