@@ -22,6 +22,15 @@ composer run dev   # jalanin artisan serve + vite + queue listener sekaligus
 
 Buka `http://localhost:8000`.
 
+Buat akses dari device lain di jaringan yang sama (misal HP buat demo ke client), `composer run dev` gak cukup karena `artisan serve` default-nya cuma bind ke `127.0.0.1`. Jalanin manual:
+
+```bash
+php artisan serve --host=0.0.0.0
+npm run dev
+```
+
+lalu buka `http://<IP-LAN-laptop>:8000` dari device lain (Vite dev server-nya udah otomatis nyesuain ke IP LAN kamu, lihat `vite.config.ts`).
+
 Testing:
 
 ```bash

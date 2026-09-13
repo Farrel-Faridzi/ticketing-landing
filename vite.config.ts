@@ -1,3 +1,4 @@
+import { networkInterfaces } from 'node:os';
 import inertia from '@inertiajs/vite';
 import { wayfinder } from '@laravel/vite-plugin-wayfinder';
 import babel from '@rolldown/plugin-babel';
@@ -6,6 +7,18 @@ import react, { reactCompilerPreset } from '@vitejs/plugin-react';
 import laravel from 'laravel-vite-plugin';
 import { bunny } from 'laravel-vite-plugin/fonts';
 import { defineConfig, lazyPlugins } from 'vite-plus';
+
+function getLanIp() {
+    for (const addresses of Object.values(networkInterfaces())) {
+        for (const address of addresses ?? []) {
+            if (address.family === 'IPv4' && !address.internal) {
+                return address.address;
+            }
+        }
+    }
+
+    return undefined;
+}
 
 export default defineConfig({
     plugins: lazyPlugins(() => [
@@ -29,6 +42,10 @@ export default defineConfig({
         }),
     ]),
     server: {
+        host: true,
+        hmr: {
+            host: getLanIp(),
+        },
         watch: {
             ignored: [
                 '**/.agents/**',
